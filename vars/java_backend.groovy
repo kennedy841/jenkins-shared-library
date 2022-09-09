@@ -1,10 +1,8 @@
-import com.gfk.jenkins.components.AuthenticationAWS
 import com.gfk.jenkins.components.Configuration
 import com.gfk.jenkins.components.DockerBuildImage
 
 def call() {
     def environmentVariables = new Configuration(this)
-    def awsAuthenticator = new AuthenticationAWS(this)
     def buildDockerImage = new DockerBuildImage(this)
     pipeline {
         agent any
@@ -25,22 +23,9 @@ def call() {
                     }
                 }
             }
-            stage('login') {
-                steps {
-                    script {
-                        awsAuthenticator.logMeIn()
-                    }
-                }
-            }
             stage ('build and push image') {
                 steps {
                     script {
-                        dir('repo-name') { // we cd in ./repo-name
-                            git branch: "develop",
-                            credentialsId: 'credential-created-in-jenkins-admin', // this has to be configured in Jenkins Admin UI
-                            url: "https://example.com/project/repo-name.git"
-                        }
-                        buildDockerImage.buildMe()
                     }
                 }
             }
@@ -49,7 +34,8 @@ def call() {
             // Always runs. And it runs before any of the other post conditions.
             always {
                 // Let's wipe out the workspace before we finish!
-                deleteDir()
+                //deleteDir()
+                echo "clean"
             }
         }
     }
