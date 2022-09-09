@@ -1,11 +1,16 @@
 import com.gfk.jenkins.components.Configuration
 import com.gfk.jenkins.components.DockerBuildImage
 
+import javax.swing.JLabel
+
+
 def call() {
     def environmentVariables = new Configuration(this)
     def buildDockerImage = new DockerBuildImage(this)
     pipeline {
-        agent any
+        agent {
+            label "docker"
+        }
         options {
             buildDiscarder(logRotator(numToKeepStr: '25'))
             timeout(time: 10, unit: 'MINUTES')
@@ -27,6 +32,7 @@ def call() {
                 steps {
                     script {
                         sh "ls"
+                        sh "mvn clean install"
                     }
                 }
             }
