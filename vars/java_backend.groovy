@@ -26,6 +26,7 @@ def call() {
             stage ('build and push image') {
                 steps {
                     script {
+                        sh "ls"
                     }
                 }
             }
