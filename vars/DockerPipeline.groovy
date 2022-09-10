@@ -1,10 +1,8 @@
-import com.gfk.jenkins.components.AuthenticationAWS
 import com.gfk.jenkins.components.Configuration
 import com.gfk.jenkins.components.DockerBuildImage
 
 def call() {
     def environmentVariables = new Configuration(this)
-    def awsAuthenticator = new AuthenticationAWS(this)
     def buildDockerImage = new DockerBuildImage(this)
     pipeline {
         agent any
@@ -22,13 +20,6 @@ def call() {
                 steps {
                     script {
                         environmentVariables.injectVars()
-                    }
-                }
-            }
-            stage('login') {
-                steps {
-                    script {
-                        awsAuthenticator.logMeIn()
                     }
                 }
             }
