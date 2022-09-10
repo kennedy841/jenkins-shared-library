@@ -6,10 +6,9 @@ import javax.swing.JLabel
 
 def call() {
     def environmentVariables = new Configuration(this)
-    def buildDockerImage = new DockerBuildImage(this)
     pipeline {
         agent {
-            label "docker-java"
+            label "docker-php"
         }
         options {
             buildDiscarder(logRotator(numToKeepStr: '25'))
@@ -32,7 +31,7 @@ def call() {
                 steps {
                     script {
                         sh "ls"
-                        sh "mvn clean install"
+                        sh 'composer update'
                     }
                 }
             }
