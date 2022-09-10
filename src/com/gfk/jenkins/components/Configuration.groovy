@@ -2,7 +2,6 @@ package com.gfk.jenkins.components
 
 class Configuration {
 
-    public static FULL_ECR_URL = "${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${steps.env.PROJECT.toLowerCase()}/${steps.env.REPO}:${steps.env.TAG}"
 
     def steps
     Configuration(steps) {this.steps = steps}
